@@ -1,0 +1,73 @@
+{
+  "entities": {
+    "Template": {
+      "title": "Template",
+      "description": "A document template with free-placement fields.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "prefix": { "type": "string" },
+        "department": { "type": "string" },
+        "fields": { "type": "array" },
+        "headerContent": { "type": "string" },
+        "footerContent": { "type": "string" },
+        "bodyContent": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdBy": { "type": "string" }
+      },
+      "required": ["id", "name", "prefix", "fields", "createdBy"]
+    },
+    "Document": {
+      "title": "Document",
+      "description": "A document created from a template.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "templateId": { "type": "string" },
+        "serialNumber": { "type": "string" },
+        "title": { "type": "string" },
+        "data": { "type": "object" },
+        "status": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "logs": { "type": "array" }
+      },
+      "required": ["id", "templateId", "serialNumber", "title", "data", "status", "creatorId"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "An employee profile with a specific role.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["Admin", "Creator", "Approver Level 1", "Approver Level 2"] },
+        "department": { "type": "string", "enum": ["HR", "Accounts", "Operational", "Administrative", "General"] },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "firstName", "lastName", "role", "department", "isActive"]
+    }
+  },
+  "firestore": {
+    "/templates/{templateId}": {
+      "schema": "Template",
+      "description": "Collection of document templates."
+    },
+    "/documents/{documentId}": {
+      "schema": "Document",
+      "description": "Collection of generated documents."
+    },
+    "/employees/{employeeId}": {
+      "schema": "Employee",
+      "description": "Collection of employee profiles."
+    }
+  }
+}
